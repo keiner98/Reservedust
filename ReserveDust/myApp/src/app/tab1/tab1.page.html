@@ -1,0 +1,30 @@
+
+<ion-header text-center>
+  <ion-toolbar color="danger" >
+      <ion-buttons slot="start">
+         <ion-menu-button menu="first"></ion-menu-button>
+        </ion-buttons>
+    <ion-title>ReserveDust</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+
+        <ion-card  ion-item *ngFor="let item of lista">
+            <ion-card-header>
+                <ion-card-title>{{ item.Nombre }}</ion-card-title>
+              <ion-card-subtitle>Santa Marta</ion-card-subtitle>
+            </ion-card-header>
+            <img src="{{ item.Ubicacion }}" routerLink="/hreserva">
+            <ion-card-content >
+              <p slot="start"> <ion-icon name="cash"></ion-icon> Precio:{{ item.Precio }}</p>
+              <p slot="start"><ion-icon name="stopwatch" ng></ion-icon>Tiempo:{{ item.Tiempo }} Horas</p>
+
+    
+              
+              <div id="PosBoton">
+                  <ion-button [routerLink]="['/hreserva/',item.id]"> <ion-icon name="bed" slot="start" ></ion-icon> Reservar</ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+
+</ion-content>
