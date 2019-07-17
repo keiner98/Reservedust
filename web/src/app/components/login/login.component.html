@@ -1,0 +1,30 @@
+<div class="container">
+  <div fxLayout="row" fxFill class="coloredContainerX box">
+    <div
+      fxFlex.lt-sm="5"
+      fxFlex.lt-md="17"
+      fxFlex="25"
+      fxLayoutAlign="center center"
+    ></div>
+    <div
+      fxFlex.lt-sm="90"
+      fxFlex.lt-md="66"
+      fxFlex="50"
+      fxLayoutAlign="center center"
+    >
+      <form (submit)="send()" fxLayout="column" class="card">
+        <h2>Sign in</h2>
+        <mat-form-field>
+          <input matInput placeholder="email" type="email" name="email"  [(ngModel)]="email" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="password" type="password" name="password"  [(ngModel)]="password" />
+        </mat-form-field>
+        <p class="invalid">{{invalid}}</p>
+        <p>Forgot<a href=""> password?</a></p> 
+        <button mat-raised-button color="primary" type="submit">Login</button>
+        <p>Not a member? <a href="/Reg">Sign up</a></p>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+.container {
+  height: 100vh;
+}
+
+.card {
+  padding: 50px;
+  box-shadow: 0 2px 5px 0 rgba(52, 47, 51, 0.63);
+  opacity: 0.9;
+  width: 100%;
+  color: #000;
+  text-align: center;
+}
+a {
+  text-decoration-line: none;
+  color: black;
+  &:hover{
+    font-weight: bold;
+  }
+}
+.invalid{
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 0%;
+}

@@ -35,7 +35,7 @@ router.post("/login", (req, res) => {
         if (user[0].contraseña !== contraseña) {
           res.status(401).json({ ans: "Contraseña invalida" });
         } else {
-          res.status(200).json({ ans: "success", data: user[0] });
+          res.status(200).json({ ans: "success", userInfo: user[0] });
         }
       }
     }
