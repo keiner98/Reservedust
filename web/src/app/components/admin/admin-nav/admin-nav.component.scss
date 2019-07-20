@@ -1,0 +1,55 @@
+$top: #24242e;
+$bot: #323241;
+$menu: #bcbcbf;
+
+.material-icons.grey {
+  color: $menu;
+}
+
+.material-icons.light {
+  color: white;
+}
+mat-sidenav {
+  transition: width 1s;
+}
+md-icon {
+  color: white;
+}
+.sidenav-content {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidenav {
+  background-color: $bot;
+}
+.active {
+  background-color: rgba(9, 30, 66, 0.25);
+}
+.sidenav-item {
+  color: white;
+  font-size: 20px;
+}
+mat-toolbar{
+  background-color: $top;
+}
+.navtext {
+  color: white;
+  margin-left: 10px;
+}
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}

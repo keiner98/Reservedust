@@ -1,0 +1,70 @@
+<mat-sidenav-container fullscreen class="sidenav-container">
+  <mat-sidenav
+    #sidenav
+    class="sidenav"
+    [ngStyle]="{ 'width.em': sidenavWidth }"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+    (mouseenter)="increase()"
+    (mouseleave)="decrease()"
+  >
+    <mat-toolbar class="toolbarbg">
+      <i class="material-icons grey">local_hotel</i>
+      <div fxFlex="20"></div>
+      <div
+        *ngIf="sidenavWidth > 6 && sidenav.mode == 'side'"
+        class="sidenav-item"
+        fxLayout="row"
+      >
+        <h4 class="navtext">ReserveDust</h4>
+        <button mat-button class="position" (click)="open()">
+          <i class="material-icons grey">menu</i>
+        </button>
+      </div>
+    </mat-toolbar>
+    <mat-nav-list>
+      <mat-list-item routerLink="1" routerLinkActive="active">
+        <i class="material-icons light">local_hotel</i>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Moteles</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="2" routerLinkActive="active">
+        <i class="material-icons light">lock_open</i>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Registro</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="3" routerLinkActive="active">
+        <i class="material-icons light">info</i>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Informes</h5>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="sidenav.toggle()"
+        *ngIf="isHandset$ | async"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span class="navtext">Admin</span>
+    </mat-toolbar>
+    <ng-content></ng-content>
+
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

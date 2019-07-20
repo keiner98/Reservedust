@@ -1,0 +1,120 @@
+<div>
+  <div fxFlex.lt-sm="5" fxFlex.lt-md="10" fxFlex="15"></div>
+  <div
+    fxFlex.lt-sm="90"
+    fxFlex.lt-md="80"
+    fxFlex="70"
+    fxLayoutAlign="center center"
+  >
+    <div fxFill gdAreas="title | form | btn" gdGap="5px" gdColumns="none">
+      <div gdArea="title">
+        <h2 class="title">Sign up</h2>
+      </div>
+      <div gdArea="form">
+        <form
+          fxLayout="row"
+          fxLayout.sm="column"
+          fxLayout.xs="column"
+          class="card"
+        >
+          <div fxFlex="45" fxLayout="column">
+            <p class="semi">User info</p>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Nombre"
+                name="name"
+                [(ngModel)]="name"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Apellido"
+                name="lastname"
+                [(ngModel)]="lastname"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Telefono"
+                type="tel"
+                name="phone"
+                [(ngModel)]="phone"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Correo electronico"
+                type="email"
+                name="email"
+                [(ngModel)]="email"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Contraseña"
+                type="password"
+                name="password"
+                [(ngModel)]="password"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Confirmar contraseña"
+                type="password"
+                name="password2"
+                [(ngModel)]="password2"
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="10"></div>
+          <div fxFlex="45" fxLayout="column">
+            <p class="semi">Motel info</p>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Nombre del motel"
+                type="text"
+                name="motel"
+                [(ngModel)]="motel"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Numero de habitaciones"
+                type="number"
+                name="roomAmount"
+                [(ngModel)]="roomAmount"
+              />
+            </mat-form-field>
+            <hr class="hr" />
+            <div fxLayoutAlign="center">
+              <button
+                class="btn"
+                mat-button
+                color="primary"
+                (click)="openBottomSheet()"
+              >
+                Ubicar motel
+              </button>
+            </div>
+            <hr class="hr" />
+          </div>
+          <p class="invalid">{{ invalid }}</p>
+        </form>
+      </div>
+      <div gdArea="btn" fxLayoutAlign="center">
+        <button class="btn" mat-raised-button color="primary" (click)="send()">
+          Send
+        </button>
+      </div>
+    </div>
+  </div>
+  <div fxFlex.lt-sm="5" fxFlex.lt-md="10" fxFlex="15"></div>
+</div>
