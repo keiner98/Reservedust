@@ -9,6 +9,7 @@ import {
   MatListModule,
   MatCheckboxModule,
   MatProgressSpinnerModule,
+  MatExpansionModule,
 } from "@angular/material";
 import { NgModule } from "@angular/core";
 
@@ -23,6 +24,7 @@ const modules = [
   MatListModule,
   MatCheckboxModule,
   MatProgressSpinnerModule,
+  MatExpansionModule,
 ];
 @NgModule({
   imports: modules,

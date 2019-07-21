@@ -1,1 +1,33 @@
-<p>home works!</p>
+<h3 fxLayoutAlign="center">Usuarios Registrados</h3>
+<div
+  class="container"
+  fxLayout="column"
+  *ngFor="let user of users; let i = index"
+>
+  <mat-accordion>
+    <mat-expansion-panel (click)="getData(user.idusuario)" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ user.usuario }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ user.nmoteles }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div>
+        <span
+          fxLayoutAlign="center center"
+          *ngIf="loading"
+          class="uploader-status"
+        >
+          <mat-spinner [diameter]="40"></mat-spinner>
+        </span>
+        <div *ngIf="!loading" fxLayout="column">
+          <div *ngFor="let motel of moteles">
+            {{ motel | json }}
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

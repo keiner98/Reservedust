@@ -10,10 +10,22 @@ conect = () =>
     database: "motel",
   });
 
-router.get("/", (req, res) => {
+router.get("/usuario", (req, res) => {
   db = conect();
   db.query(
-    "SELECT idmotel, nombreMotel, latitud, longitud FROM motel;",
+    "SELECT * FROM motel.usuario WHERE tipoUsuario=2;",
+    (err, result) => {
+      return res.send(result);
+    }
+  );
+  db.end();
+});
+
+router.post("/motel", (req, res) => {
+  const { idusuario } = req.body;
+  db = conect();
+  db.query(
+    `SELECT * FROM motel.motel WHERE idusuario=${idusuario};`,
     (err, result) => {
       return res.send(result);
     }
