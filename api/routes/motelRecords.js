@@ -7,7 +7,7 @@ conect = () =>
     host: "m001.civuexhbxgux.us-east-1.rds.amazonaws.com",
     user: "Will",
     password: "CB27d277",
-    database: "motel"
+    database: "motel",
   });
 
 router.get("/", (req, res) => {
@@ -54,25 +54,28 @@ router.post("/login", (req, res) => {
  */
 
 router.post("/signup", (req, res) => {
+  console.log(req.body);
   const {
-    usuario,
-    contraseña,
-    tipoUsuario,
-    nombreMotel,
-    telefono,
-    estado,
-    latitud,
-    longitud
+    email,
+    password,
+    userType,
+    motel,
+    phone,
+    state,
+    latitude,
+    longitude,
   } = req.body;
   db = conect();
-  const user = [usuario, contraseña, tipoUsuario];
-  const motel = [nombreMotel, telefono, estado, latitud, longitud];
+  console.log("request body");
+  console.log(req.body);
+  const user = [email, password, userType];
+  const motelData = [motel, phone, state, latitude, longitude];
   db.query(
-    `SELECT * FROM usuario where usuario = '${usuario}'`,
+    `SELECT * FROM usuario where usuario = '${email}'`,
     (err, results) => {
       if (err) throw err;
       if (results.length) {
-        res.send("Usuario ya esta registrado");
+        res.send({ ans: "Usuario ya esta registrado" });
       } else {
         db.query(
           "INSERT INTO usuario (usuario, contraseña, tipoUsuario) VALUES (?, ?, ?)",
@@ -81,10 +84,10 @@ router.post("/signup", (req, res) => {
             if (err) throw err;
             db.query(
               "INSERT INTO motel (idusuario, nombreMotel, telefono, estado, latitud, longitud) VALUES ((SELECT MAX(idusuario) from usuario),?,?,?,?,?)",
-              motel,
+              motelData,
               (err, user) => {
                 if (err) throw err;
-                res.status(200).send("Motel registrado");
+                res.status(200).send({ ans: "Motel registrado" });
               }
             );
             db.end();

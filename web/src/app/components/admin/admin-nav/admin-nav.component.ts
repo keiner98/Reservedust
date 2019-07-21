@@ -6,7 +6,7 @@ import { map, share } from "rxjs/operators";
 @Component({
   selector: "app-admin-nav",
   templateUrl: "./admin-nav.component.html",
-  styleUrls: ["./admin-nav.component.scss"]
+  styleUrls: ["./admin-nav.component.scss"],
 })
 export class AdminNavComponent {
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -20,7 +20,7 @@ export class AdminNavComponent {
   sidenavWidth = 4;
   ngOnInit() {}
   increase() {
-    console.log(this.isHandset$)
+    console.log(this.isHandset$);
     if (this.opened) {
       this.sidenavWidth = 15;
     } else {

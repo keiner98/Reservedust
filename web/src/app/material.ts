@@ -8,7 +8,7 @@ import {
   MatIconModule,
   MatListModule,
   MatCheckboxModule,
-  MatBottomSheetModule
+  MatProgressSpinnerModule,
 } from "@angular/material";
 import { NgModule } from "@angular/core";
 
@@ -22,10 +22,10 @@ const modules = [
   MatIconModule,
   MatListModule,
   MatCheckboxModule,
-  MatBottomSheetModule
+  MatProgressSpinnerModule,
 ];
 @NgModule({
   imports: modules,
-  exports: modules
+  exports: modules,
 })
 export class Material {}

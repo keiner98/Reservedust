@@ -1,19 +1,28 @@
-.semi{
+.semi {
   color: rgba(0, 0, 0, 0.8);
   font-size: 18px;
   text-align: center;
   margin: 5px;
 }
-.btn{
+.btn {
   font-size: 20px;
   text-align: center;
 }
-.title{
+.title {
   font-size: 24px;
   text-align: center;
   color: black;
 }
 
-hr{
-  width: 100%;  
+.uploader-status ::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #000000;
+}
+.mess {
+  margin-top: 2px;
+  margin-bottom: 0px;
+  padding: 0;
+}
+hr {
+  width: 100%;
 }

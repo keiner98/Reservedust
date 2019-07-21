@@ -6,12 +6,27 @@
     fxFlex="70"
     fxLayoutAlign="center center"
   >
-    <div fxFill gdAreas="title | form | btn" gdGap="5px" gdColumns="none">
+    <div
+      fxFill
+      gdAreas="title | form | btn"
+      gdGap="5px"
+      gdColumns="none"
+      [hidden]="success"
+    >
       <div gdArea="title">
-        <h2 class="title">Sign up</h2>
+        <h2 *ngIf="!showMap" class="title">Sign up</h2>
+        <h2 *ngIf="showMap" class="title">Ubica tu motel</h2>
       </div>
       <div gdArea="form">
+        <app-map
+          *ngIf="showMap"
+          (addressToReg)="getAddress($event)"
+          (lat)="getLat($event)"
+          (lon)="getLon($event)"
+        ></app-map>
         <form
+          *ngIf="!showMap"
+          [formGroup]="myForm"
           fxLayout="row"
           fxLayout.sm="column"
           fxLayout.xs="column"
@@ -20,57 +35,66 @@
           <div fxFlex="45" fxLayout="column">
             <p class="semi">User info</p>
             <mat-form-field>
-              <input
-                matInput
-                placeholder="Nombre"
-                name="name"
-                [(ngModel)]="name"
-              />
+              <input matInput placeholder="Nombre" formControlName="name" />
             </mat-form-field>
             <mat-form-field>
               <input
                 matInput
                 placeholder="Apellido"
-                name="lastname"
-                [(ngModel)]="lastname"
+                formControlName="lastname"
               />
             </mat-form-field>
             <mat-form-field>
               <input
                 matInput
                 placeholder="Telefono"
+                formControlName="phone"
                 type="tel"
-                name="phone"
-                [(ngModel)]="phone"
               />
+              <mat-error *ngIf="phone.invalid"
+                >Numero de celular invalido</mat-error
+              >
+              <mat-error *ngIf="phone.touched">Campo requerido</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input
                 matInput
                 placeholder="Correo electronico"
+                formControlName="email"
                 type="email"
-                name="email"
-                [(ngModel)]="email"
               />
+              <mat-error *ngIf="email.touched">Campo requerido</mat-error>
+
+              <mat-error *ngIf="email.invalid"
+                >El email que ingresaste es invalido</mat-error
+              >
             </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Contraseña"
-                type="password"
-                name="password"
-                [(ngModel)]="password"
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Confirmar contraseña"
-                type="password"
-                name="password2"
-                [(ngModel)]="password2"
-              />
-            </mat-form-field>
+            <div formGroupName="passwords" fxLayout="column">
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Contraseña"
+                  formControlName="pass"
+                  type="password"
+                />
+                <mat-hint align="end"
+                  >La contraseña debe tener por lo mennos una letra y un
+                  numero</mat-hint
+                >
+              </mat-form-field>
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Confirmar contraseña"
+                  formControlName="confirmPass"
+                  type="password"
+                  [errorStateMatcher]="matcher"
+                />
+                <mat-error *ngIf="passwords.hasError('notSame')">
+                  Passwords do not match
+                </mat-error>
+              </mat-form-field>
+            </div>
           </div>
           <div fxFlex="10"></div>
           <div fxFlex="45" fxLayout="column">
@@ -79,18 +103,16 @@
               <input
                 matInput
                 placeholder="Nombre del motel"
+                formControlName="motel"
                 type="text"
-                name="motel"
-                [(ngModel)]="motel"
               />
             </mat-form-field>
             <mat-form-field>
               <input
                 matInput
                 placeholder="Numero de habitaciones"
+                formControlName="rooms"
                 type="number"
-                name="roomAmount"
-                [(ngModel)]="roomAmount"
               />
             </mat-form-field>
             <hr class="hr" />
@@ -99,20 +121,52 @@
                 class="btn"
                 mat-button
                 color="primary"
-                (click)="openBottomSheet()"
+                (click)="mapLocate()"
               >
                 Ubicar motel
               </button>
             </div>
+            <p *ngIf="myForm.value.address !== null" class="semi"
+              >Dirección: {{ myForm.value.address | json }}</p
+            >
             <hr class="hr" />
           </div>
-          <p class="invalid">{{ invalid }}</p>
         </form>
       </div>
       <div gdArea="btn" fxLayoutAlign="center">
-        <button class="btn" mat-raised-button color="primary" (click)="send()">
-          Send
+        <button
+          *ngIf="showMap"
+          class="btn"
+          mat-raised-button
+          color="primary"
+          (click)="mapLocate()"
+        >
+          regresar
         </button>
+        <div *ngIf="!showMap" fxLayout="column">
+          <div [formGroup]="myForm">
+            <mat-checkbox formControlName="agree" color="primary"
+              >Agreement</mat-checkbox
+            >
+          </div>
+          <button
+            class="btn"
+            mat-raised-button
+            color="primary"
+            [disabled]="myForm.invalid"
+            (click)="send()"
+          >
+            <span *ngIf="!loading">Send</span>
+            <span
+              fxLayoutAlign="center center"
+              *ngIf="loading"
+              class="uploader-status"
+            >
+              <mat-spinner [diameter]="40"></mat-spinner>
+            </span>
+          </button>
+          <p *ngIf="response" class="mess">{{ response }}</p>
+        </div>
       </div>
     </div>
   </div>

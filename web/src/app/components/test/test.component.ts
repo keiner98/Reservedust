@@ -1,46 +1,35 @@
-import { Component, OnInit } from "@angular/core";
-import {
-  MatBottomSheet,
-  MatBottomSheetRef
-} from "@angular/material/bottom-sheet";
+import { MediaMatcher } from "@angular/cdk/layout";
+import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
 
 @Component({
   selector: "app-test",
   templateUrl: "./test.component.html",
-  styleUrls: ["./test.component.scss"]
+  styleUrls: ["./test.component.scss"],
 })
-export class testComponent implements OnInit {
-  ngOnInit() {}
-  constructor(private _bottomSheet: MatBottomSheet) {}
-  openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetOverviewExampleSheet);
-  }
-}
+export class testComponent implements OnDestroy {
+  mobileQuery: MediaQueryList;
 
-declare var google: any;
+  fillerNav = Array.from({ length: 50 }, (_, i) => `Nav Item ${i + 1}`);
 
-@Component({
-  selector: "bottom-sheet-overview-example-sheet",
-  templateUrl: "map.html",
-  styleUrls: ["./map.scss"]
-})
-export class BottomSheetOverviewExampleSheet {
-  constructor(
-    private _bottomSheetRef: MatBottomSheetRef<BottomSheetOverviewExampleSheet>
-  ) {}
-  ngOnInit() {
-    this.initMap();
+  fillerContent = Array.from(
+    { length: 50 },
+    () =>
+      `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
+  );
+
+  private _mobileQueryListener: () => void;
+
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia("(max-width: 600px)");
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  initMap() {
-    var map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 2,
-      center: new google.maps.LatLng(2.8, -187.3),
-      mapTypeId: "roadmap"
-    });
-  }
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 }
