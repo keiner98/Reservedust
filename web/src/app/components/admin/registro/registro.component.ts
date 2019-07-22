@@ -34,8 +34,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class RegistroComponent implements OnInit {
   myForm: FormGroup;
+  img: string = "default.jpg";
+  selectedFile: File = null;
   passwords: FormGroup;
-
   showMap: boolean = false;
   loading: boolean = false;
   succcess: boolean = false;
@@ -138,7 +139,23 @@ export class RegistroComponent implements OnInit {
   mapLocate() {
     this.showMap = !this.showMap;
   }
-  async send() {
+
+  async onFile(e) {
+    this.selectedFile = <File>e.target.files[0];
+    const fd = new FormData();
+    fd.append("perfil", this.selectedFile);
+    try {
+      let res = await fetch("http://localhost:5000/motel/api/upload", {
+        method: "POST",
+        body: fd,
+      });
+      let response = await res.json();
+      this.img = response.name;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async send2() {
     this.loading = true;
     const {
       name,
@@ -154,14 +171,19 @@ export class RegistroComponent implements OnInit {
       agree,
     } = this.myForm.value;
     const data = {
+      name: name,
+      lastname: lastname,
       email: email,
       password: passwords.pass,
       userType: 2,
       motel: motel,
+      address: address,
+      rooms: rooms,
       phone: phone,
       state: 1,
       latitude: latitude,
       longitude: longitude,
+      img: this.img,
     };
     const req = {
       method: "POST",
@@ -176,6 +198,37 @@ export class RegistroComponent implements OnInit {
       console.log(res);
       if (this.response === "Motel registrado") {
         this.router.navigate(["/admin"]);
+      }
+      this.succcess = true;
+    } catch (error) {
+      console.log(error);
+    }
+    this.loading = false;
+  }
+
+  async send() {
+    this.loading = true;
+    let regForm = new FormData();
+    for (let field in this.myForm.value) {
+      if (field === "passwords") {
+        let passwords = this.myForm.get(`${field}`).value;
+        regForm.append("password", passwords.pass);
+        continue;
+      }
+      regForm.append(`${field}`, this.myForm.get(`${field}`).value);
+    }
+    regForm.append("img", this.img);
+    const req = {
+      method: "POST",
+      body: regForm,
+    };
+    try {
+      let status = await fetch("http://localhost:5000/motel/api/signup2", req);
+      let res = await status.json();
+      this.response = res.ans;
+      console.log(res);
+      if (this.response === "Motel registrado") {
+        this.router.navigate(["admin"]);
       }
       this.succcess = true;
     } catch (error) {

@@ -130,6 +130,9 @@
               >Dirección: {{ myForm.value.address | json }}</p
             >
             <hr class="hr" />
+            <div>
+              <input name="myImage" type="file" (change)="onFile($event)" />
+            </div>
           </div>
         </form>
       </div>

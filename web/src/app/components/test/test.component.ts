@@ -1,35 +1,78 @@
 import { MediaMatcher } from "@angular/cdk/layout";
-import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
+import { NgForm, FormBuilder, FormGroup, FormControl } from "@angular/forms";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-test",
   templateUrl: "./test.component.html",
   styleUrls: ["./test.component.scss"],
 })
-export class testComponent implements OnDestroy {
-  mobileQuery: MediaQueryList;
-
-  fillerNav = Array.from({ length: 50 }, (_, i) => `Nav Item ${i + 1}`);
-
-  fillerContent = Array.from(
-    { length: 50 },
-    () =>
-      `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
-  );
-
-  private _mobileQueryListener: () => void;
-
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-    this.mobileQuery = media.matchMedia("(max-width: 600px)");
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
+export class testComponent implements OnInit {
+  myForm: FormGroup;
+  img: string = "default.jpg";
+  selectedFile: File = null;
+  source: any = "";
+  constructor(private fb: FormBuilder) {}
+  ngOnInit() {
+    this.myForm = this.fb.group({
+      name: ["Wilmer"],
+      lastname: ["Cantillo"],
+    });
+    this.myForm.valueChanges.subscribe(console.log);
   }
+  get name() {
+    return this.myForm.get("name").value;
+  }
+  get lastname() {
+    return this.myForm.get("lasname").value;
+  }
+  /*
+  onFile(e) {
+    console.log(e);
+    let reader = new FileReader();
+    const file = e.target.files[0];
+    reader.onloadend = () => {
+      this.source = reader.result;
+      console.log(this.source);
+    };
+    if (file) {
+      console.log(typeof file);
+      reader.readAsDataURL(file);
+    } else {
+      this.source = "";
+    }
+    console.log(this.source);
+  }
+  */
+  async onFile(e) {
+    this.selectedFile = <File>e.target.files[0];
+    const fd = new FormData();
+    fd.append("perfil", this.selectedFile);
+    try {
+      let res = await fetch("http://localhost:5000/motel/api/upload", {
+        method: "POST",
+        body: fd,
+      });
+      let response = await res.json();
+      this.img = response.name;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async upload() {}
 
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+  async request() {
+    //console.log(typeof this.myForm.value);
+    let regForm = new FormData();
+    for (let field in this.myForm.value) {
+      regForm.append(`${field}`, this.myForm.get(`${field}`).value);
+    }
+
+    let res = await fetch("http://localhost:5000/motel/api/signup2", {
+      method: "POST",
+      body: regForm,
+    });
+    let data = await res.json();
+    console.log(data);
   }
 }
