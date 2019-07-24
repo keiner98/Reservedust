@@ -1,38 +1,65 @@
-<table #testTable mat-table [dataSource]="moteles" class="mat-elevation-z8">
-  <ng-container matColumnDef="nombreMotel">
-    <th mat-header-cell *matHeaderCellDef> nombreMotel </th>
-    <td mat-cell *matCellDef="let element">
+<table cdk-table #testTable [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container cdkColumnDef="nombreMotel">
+    <th cdk-header-cell *cdkHeaderCellDef> nombreMotel </th>
+    <td class="parent" cdk-cell *cdkCellDef="let element">
       {{ element.nombreMotel }}
+      <button
+        mat-button
+        color="primary"
+        [satPopoverAnchor]="p"
+        (click)="p.open()"
+        class="hidden"
+      >
+        <i class="material-icons">
+          edit
+        </i>
+      </button>
+      <sat-popover
+        #p
+        hasBackdrop
+        xAlign="start"
+        yAlign="start"
+        (closed)="update(element, $event)"
+      >
+        <inline-edit [value]="element.nombreMotel"></inline-edit>
+      </sat-popover>
     </td>
   </ng-container>
-  <ng-container matColumnDef="telefono">
-    <th mat-header-cell *matHeaderCellDef> telefono. </th>
-    <td mat-cell *matCellDef="let element">
+
+  <ng-container cdkColumnDef="telefono">
+    <th cdk-header-cell *cdkHeaderCellDef> telefono. </th>
+    <td cdk-cell *cdkCellDef="let element">
       {{ element.telefono }}
     </td>
   </ng-container>
-  <ng-container matColumnDef="estado">
-    <th mat-header-cell *matHeaderCellDef> estado </th>
-    <td mat-cell *matCellDef="let element"> {{ element.estado }} </td>
+  <ng-container cdkColumnDef="estado">
+    <th cdk-header-cell *cdkHeaderCellDef> estado </th>
+    <td cdk-cell *cdkCellDef="let element">
+      {{ element.estado }}
+    </td>
   </ng-container>
-  <ng-container matColumnDef="habitaciones">
-    <th mat-header-cell *matHeaderCellDef> habitaciones </th>
-    <td mat-cell *matCellDef="let element">
+  <ng-container cdkColumnDef="habitaciones">
+    <th cdk-header-cell *cdkHeaderCellDef> habitaciones </th>
+    <td cdk-cell *cdkCellDef="let element">
       {{ element.habitaciones }}
     </td>
   </ng-container>
-  <ng-container matColumnDef="direccion">
-    <th mat-header-cell *matHeaderCellDef> direccion </th>
-    <td mat-cell *matCellDef="let element">
+  <ng-container cdkColumnDef="direccion">
+    <th cdk-header-cell *cdkHeaderCellDef> direccion </th>
+    <td cdk-cell *cdkCellDef="let element">
       {{ element.direccion }}
     </td>
   </ng-container>
-  <ng-container matColumnDef="idmotel">
-    <th mat-header-cell *matHeaderCellDef> </th>
-    <td mat-cell *matCellDef="let element; let i = index"
-      ><button mat-button color="warn" (click)="delete(i)">X</button>
+  <ng-container cdkColumnDef="idmotel">
+    <th cdk-header-cell *cdkHeaderCellDef> </th>
+    <td cdk-cell *cdkCellDef="let element; let i = index">
+      <button mat-button color="warn" (click)="delete(i)"
+        ><i class="material-icons">
+          delete
+        </i></button
+      >
     </td>
   </ng-container>
-  <tr mat-header-row *matHeaderRowDef="motelTable"></tr>
-  <tr mat-row *matRowDef="let row; columns: motelTable"></tr>
+  <tr cdk-header-row *cdkHeaderRowDef="motelTable"></tr>
+  <tr cdk-row *cdkRowDef="let row; columns: motelTable"></tr>
 </table>

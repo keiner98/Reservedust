@@ -1,6 +1,18 @@
 import { Component, OnInit, ViewChild, QueryList } from "@angular/core";
 import { MatTable } from "@angular/material";
 
+export interface Element {
+  direccion: string;
+  estado: number;
+  habitaciones: number;
+  idmotel: number;
+  idusuario: number;
+  latitud: string;
+  longitud: string;
+  nombreMotel: string;
+  telefono: number;
+}
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -9,10 +21,11 @@ import { MatTable } from "@angular/material";
 export class HomeComponent implements OnInit {
   // @ViewChildren('cmp') components:QueryList<CustomComponent>;
   users: object[];
+  idUser: number;
   url: string = "http://localhost:5000/uploads/perfil/";
   loading: boolean = false;
   addingMotel: boolean = false;
-  moteles: object[];
+  moteles: Element[];
   step = null;
   constructor() {}
 
@@ -32,6 +45,7 @@ export class HomeComponent implements OnInit {
     this.step = index;
   }
   async getData(idusuario) {
+    this.idUser = idusuario;
     this.addingMotel = false;
     this.loading = true;
     const data = { idusuario: idusuario };
@@ -43,15 +57,16 @@ export class HomeComponent implements OnInit {
     try {
       let status = await fetch("http://localhost:5000/motel/api/motel", req);
       this.moteles = await status.json();
-      console.log("Fetch moteles");
-      console.log(this.moteles);
     } catch (error) {
       console.log(error);
     }
     this.loading = false;
   }
   addMotel() {
-    document.getElementById("map")
     this.addingMotel = true;
+  }
+  isAdingMotel(adding: boolean) {
+    this.addingMotel = adding;
+    this.getData(this.idUser);
   }
 }

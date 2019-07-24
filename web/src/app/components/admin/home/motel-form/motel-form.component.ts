@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
@@ -12,8 +12,8 @@ export class MotelFormComponent implements OnInit {
   response: string;
   succcess: boolean = false;
   @Input("i") i: string;
-
   @Input("idusuario") idusuario: string;
+  @Output() addingMotel = new EventEmitter<boolean>();
   constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export class MotelFormComponent implements OnInit {
       latitude: [null, [Validators.required]],
       longitude: [null, [Validators.required]],
     });
-    this.motelform.valueChanges.subscribe(console.log);
+    // this.motelform.valueChanges.subscribe(console.log);
   }
   get motel() {
     return this.motelform.get("motel");
@@ -59,12 +59,10 @@ export class MotelFormComponent implements OnInit {
   }
   log() {}
   async send() {
-    console.log(this.motelform.value);
     let regForm = new FormData();
     for (let field in this.motelform.value) {
       let formElement = this.motelform.get(`${field}`).value;
       if (formElement) {
-        console.log(field);
         regForm.append(`${field}`, formElement);
       } else {
         if (field == "latitude") {
@@ -81,9 +79,8 @@ export class MotelFormComponent implements OnInit {
       });
       let res = await status.json();
       this.response = res.ans;
-      console.log(res);
       if (this.response === "Motel registrado") {
-        this.router.navigate([""]);
+        this.addingMotel.emit(false);
       }
       this.succcess = true;
     } catch (error) {

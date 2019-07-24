@@ -1,0 +1,20 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="mat-subheading-2">Add a nombreMotel</div>
+
+  <mat-form-field>
+    <input
+      matInput
+      maxLength="140"
+      name="nombreMotel"
+      [(ngModel)]="nombreMotel"
+    />
+    <mat-hint align="end">{{ nombreMotel?.length || 0 }}/140</mat-hint>
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-button type="button" color="primary" (click)="onCancel()"
+      >CANCEL</button
+    >
+    <button mat-button type="submit" color="primary">SAVE</button>
+  </div>
+</form>

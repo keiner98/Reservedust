@@ -6,6 +6,8 @@ import { Material } from "./material";
 import { Route, RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
+import { SatPopoverModule } from "@ncstate/sat-popover";
+
 // Components
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -14,16 +16,12 @@ import { AdminComponent } from "./components/admin/admin.component";
 import { AdminLoginComponent } from "./components/admin-login/admin-login.component";
 import { AdminNavComponent } from "./components/admin/admin-nav/admin-nav.component";
 import { LayoutModule } from "@angular/cdk/layout";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatButtonModule } from "@angular/material/button";
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatIconModule } from "@angular/material/icon";
-import { MatListModule } from "@angular/material/list";
 import { RegistroComponent } from "./components/admin/registro/registro.component";
 import { MapComponent } from "./components/admin/map/map.component";
 import { HomeComponent } from "./components/admin/home/home.component";
-import { MotelTableComponent } from './components/admin/home/motel-table/motel-table.component';
-import { MotelFormComponent } from './components/admin/home/motel-form/motel-form.component';
+import { MotelTableComponent } from "./components/admin/home/motel-table/motel-table.component";
+import { MotelFormComponent } from "./components/admin/home/motel-form/motel-form.component";
+import { InlineEditComponent } from './components/admin/home/inline-edit/inline-edit.component';
 
 const routes: Route[] = [
   { path: "login", component: LoginComponent },
@@ -53,6 +51,7 @@ const routes: Route[] = [
     HomeComponent,
     MotelTableComponent,
     MotelFormComponent,
+    InlineEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,13 +60,9 @@ const routes: Route[] = [
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes),
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
+    SatPopoverModule,
+    RouterModule.forRoot(routes),
   ],
   entryComponents: [MapComponent],
   providers: [],

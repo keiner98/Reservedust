@@ -20,7 +20,6 @@ export class AdminNavComponent {
   sidenavWidth = 4;
   ngOnInit() {}
   increase() {
-    console.log(this.isHandset$);
     if (this.opened) {
       this.sidenavWidth = 15;
     } else {

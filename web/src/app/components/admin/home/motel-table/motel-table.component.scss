@@ -1,3 +1,16 @@
-table{
-    width: 100%;
+table {
+  width: 100%;
 }
+.hidden {
+  visibility: hidden;
+}
+.parent:hover .hidden {
+  display: inline-block;
+  visibility: visible;
+}
+/*
+.mat-cell {
+  cursor: pointer;
+}
+
+*/

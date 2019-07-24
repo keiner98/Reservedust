@@ -58,6 +58,7 @@
           <app-motel-form
             *ngIf="this.addingMotel"
             [i]="i"
+            (addingMotel)="isAdingMotel($event)"
             [idusuario]="user.idusuario"
           >
           </app-motel-form>

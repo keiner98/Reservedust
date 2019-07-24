@@ -1,61 +1,57 @@
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  AfterContentInit,
-} from "@angular/core";
-declare var google: any;
+import { DataSource } from "@angular/cdk/collections";
+import { BehaviorSubject, Observable } from "rxjs";
+import { Component, OnInit } from "@angular/core";
 
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { position: 1, name: "Hydrogen", weight: 1.0079, symbol: "H" },
+  { position: 2, name: "Helium", weight: 4.0026, symbol: "He" },
+  { position: 3, name: "Lithium", weight: 6.941, symbol: "Li" },
+  { position: 4, name: "Beryllium", weight: 9.0122, symbol: "Be" },
+  { position: 5, name: "Boron", weight: 10.811, symbol: "B" },
+  { position: 6, name: "Carbon", weight: 12.0107, symbol: "C" },
+  { position: 7, name: "Nitrogen", weight: 14.0067, symbol: "N" },
+  { position: 8, name: "Oxygen", weight: 15.9994, symbol: "O" },
+  { position: 9, name: "Fluorine", weight: 18.9984, symbol: "F" },
+  { position: 10, name: "Neon", weight: 20.1797, symbol: "Ne" },
+];
 @Component({
   selector: "app-test",
   templateUrl: "./test.component.html",
   styleUrls: ["./test.component.scss"],
 })
-export class testComponent implements OnInit {
-  motelform: FormGroup;
-  constructor(private fb: FormBuilder) {}
-  maps: number[] = [1, 2, 3];
-  //ngOnInit() {}
+export class testComponent {
+  constructor() {}
+  displayedColumns: string[] = ["position", "name", "weight", "symbol"];
+  dataSource = new ExampleDataSource(ELEMENT_DATA);
   ngOnInit() {
-    this.mapAddress(
-      "map0",
-      "Cra. 1c #17-2 a 17-42, Santa Marta, Magdalena, Colombia"
-    );
-    this.mapAddress(
-      "map1",
-      "Cra. 1c #17-2 a 17-42, Santa Marta, Magdalena, Colombia"
-    );
-    this.mapAddress(
-      "map2",
-      "Cra. 1c #17-2 a 17-42, Santa Marta, Magdalena, Colombia"
-    );
+    console.log(this.dataSource.data());
   }
-  mapAddress(mapElement, address) {
-    console.log("here");
+}
 
-    var geocoder = new google.maps.Geocoder();
-
-    geocoder.geocode({ address: address }, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        console.log(results);
-        var mapOptions = {
-          zoom: 14,
-          center: results[0].geometry.location,
-          disableDefaultUI: true,
-        };
-        var map = new google.maps.Map(
-          document.getElementById(mapElement),
-          mapOptions
-        );
-        var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location,
-        });
-      } else {
-        alert("Geocode was not successful for the following reason: " + status);
-      }
-    });
+export class ExampleDataSource extends DataSource<PeriodicElement> {
+  dataSubject = new BehaviorSubject<PeriodicElement[]>([]);
+  data() {
+    return this.dataSubject.value;
   }
+
+  update(data) {
+    this.dataSubject.next(data);
+  }
+
+  constructor(data: any[]) {
+    super();
+    this.dataSubject.next(data);
+  }
+  connect(): Observable<PeriodicElement[]> {
+    return this.dataSubject;
+  }
+
+  disconnect() {}
 }

@@ -11,8 +11,35 @@ import {
   MatProgressSpinnerModule,
   MatExpansionModule,
   MatTableModule,
+  MatAutocompleteModule,
+  MatButtonToggleModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatTabsModule,
+  MatTooltipModule,
+  MatStepperModule,
 } from "@angular/material";
 import { NgModule } from "@angular/core";
+import { CdkTableModule } from "@angular/cdk/table";
+import { A11yModule } from "@angular/cdk/a11y";
+import { BidiModule } from "@angular/cdk/bidi";
+import { OverlayModule } from "@angular/cdk/overlay";
+import { PlatformModule } from "@angular/cdk/platform";
+import { ObserversModule } from "@angular/cdk/observers";
+import { PortalModule } from "@angular/cdk/portal";
 
 const modules = [
   MatButtonModule,
@@ -27,6 +54,34 @@ const modules = [
   MatProgressSpinnerModule,
   MatExpansionModule,
   MatTableModule,
+  MatAutocompleteModule,
+  MatButtonToggleModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatTabsModule,
+  MatTooltipModule,
+  MatStepperModule,
+
+  CdkTableModule,
+  A11yModule,
+  BidiModule,
+  OverlayModule,
+  PlatformModule,
+  ObserversModule,
+  PortalModule,
 ];
 @NgModule({
   imports: modules,
