@@ -21,7 +21,9 @@ md-icon {
   align-items: center;
   justify-content: center;
 }
-
+.color {
+  color: $menu;
+}
 .sidenav {
   background-color: $bot;
 }
@@ -32,7 +34,7 @@ md-icon {
   color: white;
   font-size: 20px;
 }
-mat-toolbar{
+mat-toolbar {
   background-color: $top;
 }
 .navtext {
@@ -46,7 +48,6 @@ mat-toolbar{
 .sidenav {
   width: 200px;
 }
-
 
 .mat-toolbar.mat-primary {
   position: sticky;

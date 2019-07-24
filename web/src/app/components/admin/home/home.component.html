@@ -5,14 +5,46 @@
   *ngFor="let user of users; let i = index"
 >
   <mat-accordion>
-    <mat-expansion-panel (click)="getData(user.idusuario)" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
-      <mat-expansion-panel-header>
+    <mat-expansion-panel
+      [expanded]="step === i"
+      (opened)="setStep(i)"
+      hideToggle
+    >
+      <mat-expansion-panel-header class="panel">
         <mat-panel-title>
-          {{ user.usuario }}
+          <div fxLayout="row" class="example-card">
+            <img
+              [src]="url + user.imPerfil"
+              alt=""
+              width="70px"
+              height="70px"
+            />
+            <div fxFlex="1"></div>
+            <div fxFlexLayout="column" fxFlex="99">
+              <p class="name">
+                {{ jsUcfirst(user.nombre) }} {{ jsUcfirst(user.apellido) }}</p
+              >
+              <p>Cliente</p>
+            </div>
+
+            <button
+              fcFlexAlign="end"
+              mat-button
+              (click)="getData(user.idusuario)"
+              color="primary"
+              *ngIf="step !== i"
+              >Ver moteles</button
+            >
+            <button
+              (click)="addMotel()"
+              fcFlexAlign="end"
+              mat-fab
+              color="primary"
+              *ngIf="step === i"
+              >Añadir</button
+            >
+          </div>
         </mat-panel-title>
-        <mat-panel-description>
-          {{ user.nmoteles }}
-        </mat-panel-description>
       </mat-expansion-panel-header>
       <div>
         <span
@@ -22,10 +54,13 @@
         >
           <mat-spinner [diameter]="40"></mat-spinner>
         </span>
-        <div *ngIf="!loading" fxLayout="column">
-          <div *ngFor="let motel of moteles">
-            {{ motel | json }}
-          </div>
+        <div *ngIf="!loading && moteles" fxLayout="column">
+          <app-motel-form *ngIf="this.addingMotel"> </app-motel-form>
+          <app-motel-table
+            *ngIf="!this.addingMotel"
+            [moteles]="moteles"
+            [i]="i"
+          ></app-motel-table>
         </div>
       </div>
     </mat-expansion-panel>

@@ -155,59 +155,10 @@ export class RegistroComponent implements OnInit {
       console.log(error);
     }
   }
-  async send2() {
-    this.loading = true;
-    const {
-      name,
-      lastname,
-      phone,
-      email,
-      passwords,
-      motel,
-      rooms,
-      latitude,
-      longitude,
-      address,
-      agree,
-    } = this.myForm.value;
-    const data = {
-      name: name,
-      lastname: lastname,
-      email: email,
-      password: passwords.pass,
-      userType: 2,
-      motel: motel,
-      address: address,
-      rooms: rooms,
-      phone: phone,
-      state: 1,
-      latitude: latitude,
-      longitude: longitude,
-      img: this.img,
-    };
-    const req = {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    };
-    console.log(data);
-    try {
-      let status = await fetch("http://localhost:5000/motel/api/signup", req);
-      let res = await status.json();
-      this.response = res.ans;
-      console.log(res);
-      if (this.response === "Motel registrado") {
-        this.router.navigate(["/admin"]);
-      }
-      this.succcess = true;
-    } catch (error) {
-      console.log(error);
-    }
-    this.loading = false;
-  }
 
   async send() {
     this.loading = true;
+    console.log(this.myForm.value);
     let regForm = new FormData();
     for (let field in this.myForm.value) {
       if (field === "passwords") {
@@ -223,7 +174,7 @@ export class RegistroComponent implements OnInit {
       body: regForm,
     };
     try {
-      let status = await fetch("http://localhost:5000/motel/api/signup2", req);
+      let status = await fetch("http://localhost:5000/motel/api/signup", req);
       let res = await status.json();
       this.response = res.ans;
       console.log(res);

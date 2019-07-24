@@ -1,6 +1,12 @@
-import { MediaMatcher } from "@angular/cdk/layout";
-import { NgForm, FormBuilder, FormGroup, FormControl } from "@angular/forms";
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  AfterContentInit,
+} from "@angular/core";
+declare var google: any;
 
 @Component({
   selector: "app-test",
@@ -8,71 +14,48 @@ import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
   styleUrls: ["./test.component.scss"],
 })
 export class testComponent implements OnInit {
-  myForm: FormGroup;
-  img: string = "default.jpg";
-  selectedFile: File = null;
-  source: any = "";
+  motelform: FormGroup;
   constructor(private fb: FormBuilder) {}
+  maps: number[] = [1, 2, 3];
+  //ngOnInit() {}
   ngOnInit() {
-    this.myForm = this.fb.group({
-      name: ["Wilmer"],
-      lastname: ["Cantillo"],
-    });
-    this.myForm.valueChanges.subscribe(console.log);
+    this.mapAddress(
+      "map0",
+      "Cra. 1c #17-2 a 17-42, Santa Marta, Magdalena, Colombia"
+    );
+    this.mapAddress(
+      "map1",
+      "Cra. 1c #17-2 a 17-42, Santa Marta, Magdalena, Colombia"
+    );
+    this.mapAddress(
+      "map2",
+      "Cra. 1c #17-2 a 17-42, Santa Marta, Magdalena, Colombia"
+    );
   }
-  get name() {
-    return this.myForm.get("name").value;
-  }
-  get lastname() {
-    return this.myForm.get("lasname").value;
-  }
-  /*
-  onFile(e) {
-    console.log(e);
-    let reader = new FileReader();
-    const file = e.target.files[0];
-    reader.onloadend = () => {
-      this.source = reader.result;
-      console.log(this.source);
-    };
-    if (file) {
-      console.log(typeof file);
-      reader.readAsDataURL(file);
-    } else {
-      this.source = "";
-    }
-    console.log(this.source);
-  }
-  */
-  async onFile(e) {
-    this.selectedFile = <File>e.target.files[0];
-    const fd = new FormData();
-    fd.append("perfil", this.selectedFile);
-    try {
-      let res = await fetch("http://localhost:5000/motel/api/upload", {
-        method: "POST",
-        body: fd,
-      });
-      let response = await res.json();
-      this.img = response.name;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async upload() {}
+  mapAddress(mapElement, address) {
+    console.log("here");
 
-  async request() {
-    //console.log(typeof this.myForm.value);
-    let regForm = new FormData();
-    for (let field in this.myForm.value) {
-      regForm.append(`${field}`, this.myForm.get(`${field}`).value);
-    }
+    var geocoder = new google.maps.Geocoder();
 
-    let res = await fetch("http://localhost:5000/motel/api/signup2", {
-      method: "POST",
-      body: regForm,
+    geocoder.geocode({ address: address }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        console.log(results);
+        var mapOptions = {
+          zoom: 14,
+          center: results[0].geometry.location,
+          disableDefaultUI: true,
+        };
+        var map = new google.maps.Map(
+          document.getElementById(mapElement),
+          mapOptions
+        );
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location,
+        });
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
     });
-    let data = await res.json();
-    console.log(data);
   }
 }

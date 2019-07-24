@@ -1,36 +1,3 @@
-<div>
-  <h1>File Upload</h1>
-  <span>File</span>
-  <form (submit)="upload()">
-    <input name="myImage" type="file" (change)="onFile($event)" />
-    <button type="submit" class="btn">Submit</button>
-  </form>
-  <br />
+<div *ngFor="let map of maps; let i = index">
+  <div id="{{ 'map' + i }}"></div>
 </div>
-<div>
-  <button (click)="request()">getImage</button>
-  <div class="container">
-    <img src="http://localhost:5000/uploads/perfil/perfil-1563745850394.jpg" />
-  </div>
-</div>
-
-<br />
-<br />
-<form [formGroup]="myForm">
-  <mat-form-field>
-    <input matInput placeholder="Nombre" formControlName="name" />
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Apellido" formControlName="lastname" />
-  </mat-form-field>
-  <input name="myImage" type="file" (change)="onFile($event)" />
-</form>
-<button (click)="request()">send</button>
-<!--
-<form (submit)="upload()">
-  <input type="file" name="recfile" placeholder="Select file" />
-  <br />
-  <button type="submit">Upload</button>
-</form>
-
--->

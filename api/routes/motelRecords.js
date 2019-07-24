@@ -116,8 +116,8 @@ router.post("/signup2", (req, res) => {
   db = conect();
   console.log("request body");
   console.log(req.body);
-  const user = [name, lastname, email, password, userType];
-  const motelData = [motel, phone, state, rooms, address, latitude, longitude];
+  const user = [name.toLowerCase(), lastname.toLowerCase(), email.toLowerCase(), password, userType];
+  const motelData = [motel.toLowerCase(), phone, state, rooms, address, latitude, longitude];
   db.query(
     `SELECT * FROM usuario where usuario = '${email}'`,
     (err, results) => {

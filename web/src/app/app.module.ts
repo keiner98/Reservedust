@@ -22,6 +22,8 @@ import { MatListModule } from "@angular/material/list";
 import { RegistroComponent } from "./components/admin/registro/registro.component";
 import { MapComponent } from "./components/admin/map/map.component";
 import { HomeComponent } from "./components/admin/home/home.component";
+import { MotelTableComponent } from './components/admin/home/motel-table/motel-table.component';
+import { MotelFormComponent } from './components/admin/home/motel-form/motel-form.component';
 
 const routes: Route[] = [
   { path: "login", component: LoginComponent },
@@ -49,6 +51,8 @@ const routes: Route[] = [
     AdminNavComponent,
     RegistroComponent,
     HomeComponent,
+    MotelTableComponent,
+    MotelFormComponent,
   ],
   imports: [
     BrowserModule,

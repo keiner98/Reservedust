@@ -1,0 +1,38 @@
+<table #testTable mat-table [dataSource]="moteles" class="mat-elevation-z8">
+  <ng-container matColumnDef="nombreMotel">
+    <th mat-header-cell *matHeaderCellDef> nombreMotel </th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.nombreMotel }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="telefono">
+    <th mat-header-cell *matHeaderCellDef> telefono. </th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.telefono }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="estado">
+    <th mat-header-cell *matHeaderCellDef> estado </th>
+    <td mat-cell *matCellDef="let element"> {{ element.estado }} </td>
+  </ng-container>
+  <ng-container matColumnDef="habitaciones">
+    <th mat-header-cell *matHeaderCellDef> habitaciones </th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.habitaciones }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="direccion">
+    <th mat-header-cell *matHeaderCellDef> direccion </th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.direccion }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="idmotel">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element; let i = index"
+      ><button mat-button color="warn" (click)="delete(i)">X</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="motelTable"></tr>
+  <tr mat-row *matRowDef="let row; columns: motelTable"></tr>
+</table>

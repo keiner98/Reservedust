@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, QueryList } from "@angular/core";
+import { MatTable } from "@angular/material";
 
 @Component({
   selector: "app-home",
@@ -6,10 +7,13 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
+  // @ViewChildren('cmp') components:QueryList<CustomComponent>;
   users: object[];
+  url: string = "http://localhost:5000/uploads/perfil/";
   loading: boolean = false;
+  addingMotel: boolean = false;
   moteles: object[];
-  step = 0;
+  step = null;
   constructor() {}
 
   async ngOnInit() {
@@ -20,10 +24,15 @@ export class HomeComponent implements OnInit {
       console.log(err);
     }
   }
+  jsUcfirst(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   setStep(index: number) {
     this.step = index;
   }
   async getData(idusuario) {
+    this.addingMotel = false;
     this.loading = true;
     const data = { idusuario: idusuario };
     const req = {
@@ -31,14 +40,17 @@ export class HomeComponent implements OnInit {
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
     };
-    console.log(data);
     try {
       let status = await fetch("http://localhost:5000/motel/api/motel", req);
       this.moteles = await status.json();
+      console.log("Fetch moteles");
       console.log(this.moteles);
     } catch (error) {
       console.log(error);
     }
     this.loading = false;
+  }
+  addMotel() {
+    this.addingMotel = true;
   }
 }

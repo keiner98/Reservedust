@@ -1,7 +1,25 @@
+.example-card {
+  width: 100%;
+}
+
 .container {
   margin: 10px 20px 10px 20px;
 }
 .uploader-status ::ng-deep .mat-progress-spinner circle,
 .mat-spinner circle {
   stroke: #000000;
+}
+.profile {
+  width: 60px;
+  height: 20px;
+}
+img {
+  border-radius: 50%;
+}
+
+.panel {
+  padding: 2%;
+}
+.name {
+  font-weight: bold;
 }
