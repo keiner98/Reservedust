@@ -60,6 +60,7 @@ router.post("/motel", (req, res) => {
   db.query(
     `SELECT * FROM motel.motel WHERE idusuario=${req.body.idusuario};`,
     (err, result) => {
+      console.log(result);
       return res.send(result);
     }
   );
@@ -97,55 +98,36 @@ router.post("/login", (req, res) => {
  * INSERT INTO motel (idmotel, nombreMotel, telefono, estado, latitud, longitud)
  * VALUES ((SELECT MAX(idusuario) from usuario),'Casa Nuba', '4251232', 1,'11.23274937841482', '-74.1765546798706');
  */
-router.post("/signup2", (req, res) => {
-  console.log(req.body);
-  const {
-    name,
-    lastname,
-    email,
-    password,
-    userType,
-    motel,
-    phone,
-    state,
-    address,
-    rooms,
-    latitude,
-    longitude,
-  } = req.body;
+
+router.post("/regMotel", upload.fields([]), (req, res) => {
+  let data = [];
+  for (const key in req.body) {
+    data.push(req.body[key]);
+  }
+  console.log(data);
   db = conect();
-  console.log("request body");
-  console.log(req.body);
-  const user = [name.toLowerCase(), lastname.toLowerCase(), email.toLowerCase(), password, userType];
-  const motelData = [motel.toLowerCase(), phone, state, rooms, address, latitude, longitude];
   db.query(
-    `SELECT * FROM usuario where usuario = '${email}'`,
-    (err, results) => {
+    `INSERT INTO motel (idusuario, nombreMotel, telefono, estado, habitaciones, direccion, latitud, longitud) VALUES (?,?,?,?,?,?,?,?)`,
+    data,
+    (err, result) => {
       if (err) throw err;
-      if (results.length) {
-        res.send({ ans: "Usuario ya esta registrado" });
-      } else {
-        db.query(
-          "INSERT INTO usuario (nombre, apellido, usuario, contraseña, tipoUsuario, nmoteles, imPerfil) VALUES (?, ?, ?, ?, ?, 1, ?)",
-          user,
-          (err, user) => {
-            if (err) throw err;
-            db.query(
-              "INSERT INTO motel (idusuario, nombreMotel, telefono, estado, habitaciones, direccion, latitud, longitud) VALUES ((SELECT MAX(idusuario) from usuario),?,?,?,?,?,?,?)",
-              motelData,
-              (err, user) => {
-                if (err) throw err;
-                res.status(200).send({ ans: "Motel registrado" });
-              }
-            );
-            db.end();
-          }
-        );
-      }
+      res.json({ ans: "Motel registrado" });
     }
   );
+  db.end();
 });
 
+router.post("/remMotel", (req, res) => {
+  db = conect();
+  db.query(
+    `DELETE FROM motel WHERE idmotel = ${req.body.id}`,
+    (err, result) => {
+      if (err) throw err;
+      res.json({ ans: "Motel eliminado" });
+    }
+  );
+  db.end();
+});
 router.post("/signup", upload.fields([]), (req, res) => {
   console.log(req.body);
   const {

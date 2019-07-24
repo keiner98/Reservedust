@@ -1,13 +1,12 @@
-<div fxFill fxLayout="row" fxLayoutAlign="center">
-  <div fxFlex="40">
-    <app-map
-      [index]="i"
-      (addressToReg)="getAddress($event)"
-      (lat)="getLat($event)"
-      (lon)="getLon($event)"
-    ></app-map>
-  </div>
-  <form [formGroup]="motelform" fxFlex="40" fxLayout="column">
+<div
+  fxFill
+  fxLayout="row"
+  fxLayout.sm="column"
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  class="form"
+>
+  <form [formGroup]="motelform" fxFlex="40" fxLayout="column" class="">
     <h3>Motel Form</h3
     ><mat-form-field>
       <input
@@ -21,12 +20,20 @@
       <input matInput placeholder="Telefono" formControlName="phone" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Habitacione" formControlName="roomAmount" />
+      <input matInput placeholder="Habitaciones" formControlName="roomAmount" />
     </mat-form-field>
+    <div></div>
     <button (click)="send()">Send</button>
+    <p>{{ response }}</p>
   </form>
-  <!-- 
   <div fxFlex="10"></div>
-
--->
+  <br />
+  <div fxFlex="40">
+    <app-map
+      [index]="i"
+      (addressToReg)="getAddress($event)"
+      (lat)="getLat($event)"
+      (lon)="getLon($event)"
+    ></app-map>
+  </div>
 </div>

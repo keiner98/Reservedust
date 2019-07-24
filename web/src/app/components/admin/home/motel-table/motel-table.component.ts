@@ -7,6 +7,7 @@ import { MatTable } from "@angular/material";
   styleUrls: ["./motel-table.component.scss"],
 })
 export class MotelTableComponent implements OnInit {
+  response: string;
   @ViewChild("testTable", { static: false }) table: MatTable<any>;
   @Input("moteles") moteles: object[];
   @Input("i") i: string;
@@ -25,11 +26,21 @@ export class MotelTableComponent implements OnInit {
     console.log(this.moteles);
   }
 
-  delete(row) {
-    console.log(this.table);
-    console.log("row" + row);
+  async delete(row) {
+    console.log();
+    try {
+      let status = await fetch("http://localhost:5000/motel/api/remMotel", {
+        method: "POST",
+        body: JSON.stringify({ id: this.moteles[row].idmotel }),
+        headers: { "Content-Type": "application/json" },
+      });
+      let res = await status.json();
+      this.response = res.ans;
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
     this.moteles.splice(row, 1);
-    console.log(this.moteles);
     this.table.renderRows();
   }
 }
