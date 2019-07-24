@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
 import { typeofExpr } from "@angular/compiler/src/output/output_ast";
 declare var google: any;
 
@@ -8,6 +8,7 @@ declare var google: any;
   styleUrls: ["./map.component.scss"],
 })
 export class MapComponent implements OnInit {
+  @Input("index") i: string;
   @Output() addressToReg = new EventEmitter<string>();
   @Output() lat = new EventEmitter<number>();
   @Output() lon = new EventEmitter<number>();
@@ -17,10 +18,12 @@ export class MapComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.initMap();
+    let maps = document.getElementsByClassName("map");
+    this.initMap(maps[this.i]);
   }
-  initMap() {
-    this.map = new google.maps.Map(document.getElementById("map"), {
+  initMap(map) {
+    //document.getElementById("map")
+    this.map = new google.maps.Map(map, {
       zoom: 13,
       center: new google.maps.LatLng(11.232623098616843, -74.19445037841797),
       mapTypeId: "roadmap",

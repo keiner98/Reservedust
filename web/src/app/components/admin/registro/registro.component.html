@@ -20,6 +20,7 @@
       <div gdArea="form">
         <app-map
           *ngIf="showMap"
+          [index]="0"
           (addressToReg)="getAddress($event)"
           (lat)="getLat($event)"
           (lon)="getLon($event)"

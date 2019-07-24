@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class MotelFormComponent implements OnInit {
   motelform: FormGroup;
+  @Input("i") i: string;
   @Input("idusuario") idusuario: string;
   constructor(private fb: FormBuilder) {}
 
@@ -21,6 +22,7 @@ export class MotelFormComponent implements OnInit {
       longitude: [null, [Validators.required]],
       address: [null, [Validators.required]],
     });
+    this.motelform.valueChanges.subscribe(console.log);
   }
   get motel() {
     return this.motelform.get("motel");
@@ -50,10 +52,9 @@ export class MotelFormComponent implements OnInit {
   getAddress(addr: string) {
     if (addr) this.motelform.patchValue({ address: addr });
   }
-  log() {
-    console.log(this.motelform.value);
-  }
+  log() {}
   send() {
+    console.log(this.motelform.value);
     let regForm = new FormData();
     for (let field in this.motelform.value) {
       if (field === "passwords") {
@@ -63,6 +64,5 @@ export class MotelFormComponent implements OnInit {
       }
       regForm.append(`${field}`, this.motelform.get(`${field}`).value);
     }
-    console.log(this.motelform.value);
   }
 }

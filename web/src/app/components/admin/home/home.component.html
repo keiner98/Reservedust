@@ -55,7 +55,7 @@
           <mat-spinner [diameter]="40"></mat-spinner>
         </span>
         <div *ngIf="!loading && moteles" fxLayout="column">
-          <app-motel-form *ngIf="this.addingMotel"> </app-motel-form>
+          <app-motel-form *ngIf="this.addingMotel" [i]="i"> </app-motel-form>
           <app-motel-table
             *ngIf="!this.addingMotel"
             [moteles]="moteles"

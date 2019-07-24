@@ -1,6 +1,7 @@
 <div fxFill fxLayout="row" fxLayoutAlign="center">
   <div fxFlex="40">
     <app-map
+      [index]="i"
       (addressToReg)="getAddress($event)"
       (lat)="getLat($event)"
       (lon)="getLon($event)"

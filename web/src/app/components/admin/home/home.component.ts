@@ -51,6 +51,7 @@ export class HomeComponent implements OnInit {
     this.loading = false;
   }
   addMotel() {
+    document.getElementById("map")
     this.addingMotel = true;
   }
 }
